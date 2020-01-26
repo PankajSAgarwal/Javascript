@@ -1,0 +1,38 @@
+Running javascript outside of the browser
+
+1) Open the terminal in VS
+
+cmd+`
+
+2) To open REPL (Read Eval Print loop)
+
+node
+
+3) To exit REPL
+
+.exit
+
+OR
+
+CTRL + D
+
+4) To clear console while on REPL
+
+cmd + k
+
+5) See All global variables in Node(while in REPL mode)
+
+Tab
+OR
+Tab Tab
+
+String.<<Tab>> - Shows all the properties of String method
+
+6) Underscore(_) - Stores the previous result
+e.g
+3*8 = 24
+_+6= 30
+
+7) Running a JS file
+
+node index.js
