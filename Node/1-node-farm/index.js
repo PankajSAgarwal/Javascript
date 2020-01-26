@@ -39,6 +39,10 @@ const http = require("http");
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////*************************** SERVER ********************************////////////////////
 
+// Non - blocking even if synchronous because it is not in a call back and only called once when program starts
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
   //console.log(req);
   //res.end('Hello from Server !');
@@ -47,6 +51,9 @@ const server = http.createServer((req, res) => {
     res.end("This is the overview");
   } else if (pathName === "/product") {
     res.end("This is the PRODUCT");
+  } else if (pathName === "/api") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(data);
   } else {
     res.writeHead(404, {
       "Content-type": "text/html",
