@@ -2,7 +2,7 @@ const fs = require("fs");
 const http = require("http");
 const url = require("url");
 
-const replaceTemplate = require('./modules/replaceTemplate');
+const replaceTemplate = require("./modules/replaceTemplate");
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////*************************** FILES ********************************/////////////////////
 // Blocking , Syncronous way
@@ -64,10 +64,7 @@ const server = http.createServer((req, res) => {
   //console.log(url.parse(req.url, true));
   // ES6 destructuring to assign variables query and pathname direcly the value from url.parse
 
-  const {
-    query,
-    pathname
-  } = url.parse(req.url, true);
+  const { query, pathname } = url.parse(req.url, true);
 
   // Overview Page
   if (pathname === "/" || pathname === "/overview") {
