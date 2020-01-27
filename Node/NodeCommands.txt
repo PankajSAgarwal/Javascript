@@ -36,3 +36,41 @@ _+6= 30
 7) Running a JS file
 
 node index.js
+
+8) to create package.json for a project
+
+npm init
+
+9) To install simple dependency/regular dependency
+
+npm install slugify
+
+note: slugify is a dependency to make url more readable
+
+10) To install dev dependency
+
+npm install nodemon --save-dev
+
+note: nodemon is a dev dependency that automatically detects any changes in working directory and restarts the node application to reflect those changes .
+
+11) to install a node module globally
+
+npm install nodemon --global
+   OR
+npm i nodemon --global
+
+on Mac use
+
+sudo npm i nodemon --global
+
+12) To run local dev dependencies mentioned in package.json instead of global one , we can add the command line execution instructions in the scripts of package.json
+
+e.g package.json has below
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  }
+Then we can use below command to start nodemon
+npm run start
+
+13)
