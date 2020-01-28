@@ -73,4 +73,8 @@ e.g package.json has below
 Then we can use below command to start nodemon
 npm run start
 
+OR
+
+npm start  // start is default for npm 
+
 13)
