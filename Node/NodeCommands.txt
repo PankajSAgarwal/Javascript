@@ -75,6 +75,63 @@ npm run start
 
 OR
 
-npm start  // start is default for npm 
+npm start  // start is default for npm
 
-13)
+13) to check outdated packages
+
+npm outdated
+
+14) to install a specific version of a module
+
+npm install slugify@1.0.0
+
+npm outdated
+
+Package  Current  Wanted  Latest  Location
+slugify    1.0.0   1.3.6   1.3.6  node-farm
+
+15) the module ^1.3.6 means it accepts all patch version
+
+the module version ~1.0.0 means it will show minimum patch version wanted.
+
+e.g In package.json
+
+"dependencies": {
+    "slugify": "~1.0.0"
+  }
+
+npm outdated
+Package  Current  Wanted  Latest  Location
+slugify    1.0.0   1.0.2   1.3.6  node-farm
+
+npm update slugify will bump up the version to ^1.0.2 (^ meaning it will accept all patch versions)
+npm update slugify will bump up the version all the way to ^1.3.6
+but if package.json has
+
+"dependencies": {
+    "slugify": "^1.0.0"
+  }
+
+  npm outdated
+
+  Package  Current  Wanted  Latest  Location
+  slugify    1.0.0   1.3.6   1.3.6  node-farm
+
+16) install and uninstall packages
+
+npm i express  // install express
+
+npm uninstall express // uninstall express - removes it from node_modules folder and package.json
+
+17) to install all dependencies defined in package.json (when moving to a different computer or when node_modules folder not available,
+ generally this folder is not shared when sharing the code)
+
+ npm install
+
+18) package.lock.json
+
+exact version of dependencies are specified in package.lock.json
+
+19) While sharing or checking out source code in git , always checkout package.json and package.lock.json files and not the node_modules folder.
+
+npm install command will automatically read package.json and install the required dependencies in node_module folder.
