@@ -41,6 +41,29 @@ app.get('/api/v1/tours', (req, res) => {
   });
 });
 
+// Get a tour with specific id
+
+app.get('/api/v1/tours/:id', (req, res) => {
+
+  console.log(req.params);
+  // id returned would be string so convert it to number so that array.find can use number to comapre the id in next step
+  const id = req.params.id * 1;
+  const tour = tours.find(el => el.id === id);
+
+  //if (id > tours.length) 
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID'
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    tour
+  });
+});
+
 // POST
 // Express by default doesnt add data to the body of request so we need to use a middleware e.g app.use(express.json())
 
