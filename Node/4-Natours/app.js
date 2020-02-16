@@ -2,6 +2,8 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
+app.use(express.json()); // express.json() is middleware, express by default doesnt add data to request,so need to use a middleware
+
 // GET
 // app.get('/', (req, res) => {
 
@@ -26,8 +28,8 @@ const app = express();
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
-// GET
 
+// GET
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -39,6 +41,27 @@ app.get('/api/v1/tours', (req, res) => {
   });
 });
 
+// POST
+// Express by default doesnt add data to the body of request so we need to use a middleware e.g app.use(express.json())
+
+app.post('/api/v1/tours', (req, res) => {
+  //console.log(req.body);
+
+  const newID = tours[tours.length - 1].id + 1;
+  const newTour = Object.assign({ id: newID }, req.body);
+  tours.push(newTour);
+  fs.writeFile(
+    `${__dirname}/dev-data/data/tours-simple.json`, JSON.stringify(tours),
+    err => {
+      res.status(201).json({
+        status: 'success',
+        data: {
+          tour: newTour
+        }
+      });
+    }
+  )
+});
 const port = 3000;
 app.listen(port, () => {
   console.log(`App running on port ${port}....`);
