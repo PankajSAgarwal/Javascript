@@ -25,7 +25,29 @@ const writeFilePro = (file, data) => {
   });
 }
 
-readFilePro(`${__dirname}/dog.txt`).then(data => {
+// ES8 async await
+
+const getDocPic = async () => {
+
+  try {
+    const data = await readFilePro(`${__dirname}/dog.txt`);
+    console.log(`Breed : ${data}`);
+
+    const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+    console.log(res.body.message);
+
+    await writeFilePro('dog-img.txt', res.body.message);
+    console.log("Random dog image saved to file");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//call the async func here
+
+getDocPic();
+// ES 6 promises and promise chahining
+/*readFilePro(`${__dirname}/dog.txt`).then(data => {
   console.log(`Breed : ${data}`);
 
   // Promises - Pending , Result .Result can be resolved or rejected .
@@ -38,4 +60,4 @@ readFilePro(`${__dirname}/dog.txt`).then(data => {
     console.log("Random dog image saved to file");
   })
   .catch(err => console.log(err));
-
+*/
