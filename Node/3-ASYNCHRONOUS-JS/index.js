@@ -40,12 +40,39 @@ const getDocPic = async () => {
     console.log("Random dog image saved to file");
   } catch (err) {
     console.log(err);
+    throw err;
   }
+  return '2:Ready';
 };
 
-//call the async func here
+// Using IIFE with async await to handle return values from async function
 
-getDocPic();
+(
+  async () => {
+    try {
+      console.log('1. Will get Doc Pic');
+      const x = await getDocPic();
+      console.log('2. Ready');
+      console.log('3. Done Getting Dog Pic');
+    } catch (err) {
+      console.log("Error : " + err);
+    }
+  }
+)();
+
+//call the async func here
+// using then catch to return values from async function
+/*
+console.log('1. Getting doc Pic');
+getDocPic().then(x => {
+  console.log(x);
+  console.log('3. Done getting dog pic!!!');
+})
+  .catch(err => {
+
+    console.log("Error : " + err);
+  });*/
+
 // ES 6 promises and promise chahining
 /*readFilePro(`${__dirname}/dog.txt`).then(data => {
   console.log(`Breed : ${data}`);
