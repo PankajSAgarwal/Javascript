@@ -29,8 +29,7 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
-// GET
-app.get('/api/v1/tours', (req, res) => {
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
@@ -39,11 +38,9 @@ app.get('/api/v1/tours', (req, res) => {
       //with a single key 
     }
   });
-});
+}
 
-// Get a tour with specific id
-
-app.get('/api/v1/tours/:id', (req, res) => {
+const getTour = (req, res) => {
 
   console.log(req.params);
   // id returned would be string so convert it to number so that array.find can use number to comapre the id in next step
@@ -62,11 +59,9 @@ app.get('/api/v1/tours/:id', (req, res) => {
     status: 'success',
     data: { tour }
   });
-});
+}
 
-// PATCH
-// Just for demo purposes , nothing updated 
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
 
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
@@ -78,12 +73,23 @@ app.patch('/api/v1/tours/:id', (req, res) => {
     status: 'success',
     data: '<tour updated here>>'
   });
-})
+}
 
-// POST
-// Express by default doesnt add data to the body of request so we need to use a middleware e.g app.use(express.json())
+const deleteTour = (req, res) => {
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID'
+    });
+  }
+  // Status code 204 : no content for delete
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+}
 
-app.post('/api/v1/tours', (req, res) => {
+const createTour = (req, res) => {
   //console.log(req.body);
 
   const newID = tours[tours.length - 1].id + 1;
@@ -100,7 +106,34 @@ app.post('/api/v1/tours', (req, res) => {
       });
     }
   )
-});
+}
+// GET
+//app.get('/api/v1/tours', getAllTours);
+// Get a tour with specific id
+//app.get('/api/v1/tours/:id', getTour);
+// PATCH
+// Just for demo purposes , nothing updated 
+//app.patch('/api/v1/tours/:id', updateTour);
+// DELETE
+//app.delete('/api/v1/tours/:id', deleteTour);
+// POST
+// Express by default doesnt add data to the body of request so we need to use a middleware e.g app.use(express.json())
+
+//app.post('/api/v1/tours', createTour);
+
+// Better way of handling routes
+
+app
+  .route('/api/v1/tours')
+  .get(getAllTours)
+  .post(createTour);
+
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`App running on port ${port}....`);
