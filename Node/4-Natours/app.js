@@ -4,6 +4,17 @@ const app = express();
 
 app.use(express.json()); // express.json() is middleware, express by default doesnt add data to request,so need to use a middleware
 
+// express middleware always have access to 3 variables request,response and next
+app.use((req, res, next) => {
+  console.log("Hello from Midlleware");
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestedTime = new Date().toISOString();
+  next();
+})
+
 // GET
 // app.get('/', (req, res) => {
 
@@ -32,6 +43,7 @@ const tours = JSON.parse(
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
+    requestedAt: req.requestedTime,
     results: tours.length,
     data: {
       tours   // tours:tours,in ES6 when key value are same,obejct can be represented 
@@ -128,11 +140,16 @@ app
   .get(getAllTours)
   .post(createTour);
 
+
+
+
 app
   .route('/api/v1/tours/:id')
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+
 
 const port = 3000;
 app.listen(port, () => {
