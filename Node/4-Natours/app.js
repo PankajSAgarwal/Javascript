@@ -1,7 +1,12 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
 
+
+// 1) MIDDLEWARES 
+app.use(morgan('dev')); // middleware used for logging in console
 app.use(express.json()); // express.json() is middleware, express by default doesnt add data to request,so need to use a middleware
 
 // express middleware always have access to 3 variables request,response and next
@@ -40,6 +45,7 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
+// 2) ROUTE HANDLERS
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -135,6 +141,7 @@ const createTour = (req, res) => {
 
 // Better way of handling routes
 
+// 3) ROUTES
 app
   .route('/api/v1/tours')
   .get(getAllTours)
@@ -149,7 +156,7 @@ app
   .patch(updateTour)
   .delete(deleteTour);
 
-
+// 4) START THE SERVER
 
 const port = 3000;
 app.listen(port, () => {
